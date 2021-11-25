@@ -73,7 +73,7 @@ stop:
 .PHONY: stop
 
 start:
-	k3s server --docker
+	nohup bash -c "k3s server --docker &"
 .PHONY: start
 
 run_deployment:
@@ -105,7 +105,7 @@ scale_deployment:
 .PHONY: scale_deployment
 
 expose_grafana:
-	kubectl -n monitoring port-forward --address 0.0.0.0 service/grafana 3000:3000 &
+	nohup bash -c "kubectl -n monitoring port-forward --address 0.0.0.0 service/grafana 3000:3000 &"
 	@echo "\n\tGrafana available at ${HOST_URL}:3000\n"
 .PHONY: expose_grafana
 
@@ -121,3 +121,8 @@ install_deps:
 	curl -sfL https://get.k3s.io | INSTALL_K3S_SKIP_START=true INSTALL_K3S_SKIP_ENABLE=true sh -s
 	k3s --version
 .PHONY: install_deps
+
+uninstall_deps:
+	bash -c /usr/local/bin/k3s-uninstall.sh
+.PHONY: uninstall_deps
+	
