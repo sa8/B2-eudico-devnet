@@ -2,9 +2,9 @@
 FROM golang:1.17 as builder
 
 # set BRANCH_FIL or COMMIT_HASH_FIL
-ARG BRANCH_FIL=sharding-filcns
+ARG BRANCH_FIL=zondax/eudico
 ARG COMMIT_HASH_FIL=""
-ARG REPO_FIL=https://github.com/filecoin-project/eudico
+ARG REPO_FIL=https://github.com/Zondax/eudico
 ARG NODEPATH=/lotus
 
 ENV DEBIAN_FRONTEND=noninteractive
@@ -58,7 +58,10 @@ RUN apt-get update && \
 COPY --from=builder /lotus/eudico /usr/local/bin/
 
 # Create genesis file
-RUN eudico delegated genesis t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba gen.gen
+#RUN eudico delegated genesis t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba gen.gen
+
+# Copy genesis file
+COPY gen.gen /gen.gen
 
 # Copy key file
 COPY key.key /key.key

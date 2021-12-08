@@ -1,8 +1,6 @@
 #! /bin/bash
 
-tmux new-session -d -s daemon 'eudico delegated daemon --genesis=gen.gen' \; \
-split-window 'eudico wait-api; eudico wallet import --as-default --format=json-lotus key.key; eudico delegated miner; sleep 2' \;
-
+eudico delegated daemon --genesis=gen.gen &
 eudico wait-api
 
 if [ -s /config/peerID.txt ]; then
@@ -10,6 +8,9 @@ if [ -s /config/peerID.txt ]; then
         peerID=$(</config/peerID.txt)
         eudico net connect $peerID
 else
+        eudico wallet import --as-default --format=json-lotus key.key
+        eudico delegated miner &
+
         # Create peerID file
         eudico net listen | head -n 1 > /config/peerID.txt
 fi
