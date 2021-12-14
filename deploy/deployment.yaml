@@ -12,7 +12,6 @@ spec:
     matchLabels:
       app: minernode
       tier: node
-  serviceName: minernode
   template:
     metadata:
       labels:
@@ -27,6 +26,10 @@ spec:
         - name: eudico-node
           image: zondax/filecoin-eudico:latest
           imagePullPolicy: Never
+          ports:
+            - containerPort: 1234
+            - containerPort: 1235
+            - containerPort: 1236
           volumeMounts:
             - name: eudico-config
               mountPath: /config

@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: bitcoin-node
+  labels:
+    app: bitcoin-node
+    tier: node
+spec:
+  serviceName: bitcoin-node
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bitcoin-node
+      tier: node
+  template:
+    metadata:
+      labels:
+        app: bitcoin-node
+        tier: node
+    spec:
+      containers:
+        - name: bitcoin-node
+          image: rllola/bitcoind
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8332
+          volumeMounts:
+            - name: bitcoind-config
+              mountPath: /root/.bitcoin/bitcoin.conf
+              subPath: bitcoin.conf
+      volumes:
+        - name: bitcoind-config
+          configMap:
+            name: bitcoind-cnf
+

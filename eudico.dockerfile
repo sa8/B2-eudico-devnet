@@ -2,7 +2,7 @@
 FROM golang:1.17 as builder
 
 # set BRANCH_FIL or COMMIT_HASH_FIL
-ARG BRANCH_FIL=zondax/eudico
+ARG BRANCH_FIL=ezequiel/test
 ARG COMMIT_HASH_FIL=""
 ARG REPO_FIL=https://github.com/Zondax/eudico
 ARG NODEPATH=/lotus
@@ -39,6 +39,12 @@ RUN apt-get update && \
     apt-get install -yy apt-utils && \
     apt-get install -yy gcc git bzr jq pkg-config mesa-opencl-icd ocl-icd-opencl-dev hwloc libhwloc-dev
 
+RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+ENV RUSTFLAGS="-C target-cpu=native -g"
+ENV FFI_BUILD_FROM_SOURCE=1
+
 RUN make clean eudico
 
 # Create final container
@@ -56,6 +62,7 @@ RUN apt-get update && \
 
 # Install eudico
 COPY --from=builder /lotus/eudico /usr/local/bin/
+COPY --from=builder /lotus/data/ /eudico_data
 
 # Create genesis file
 #RUN eudico delegated genesis t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba gen.gen

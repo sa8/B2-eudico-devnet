@@ -14,8 +14,10 @@
 #*  limitations under the License.
 #********************************************************************************
 
+DOCKER_BITCOIN_IMAGE=zondax/bitcoin-node:latest
 DOCKER_EUDICO_IMAGE=zondax/filecoin-eudico:latest
 DOCKERFILE_EUDICO=./eudico.dockerfile
+DOCKERFILE_BITCOIN=./bitcoin.dockerfile
 
 CONTAINER_NAME=eudiconode
 CONTAINER_DEVNET_NAME=filecoin-eudico-devnet
@@ -59,6 +61,10 @@ build_eudico:
 	docker image build -t $(DOCKER_EUDICO_IMAGE) -f $(DOCKERFILE_EUDICO) .
 .PHONY: build_eudico
 
+build_bitcoin:
+	docker image build --no-cache -t $(DOCKER_BITCOIN_IMAGE) -f $(DOCKERFILE_BITCOIN) .
+.PHONY: build_bitcoin
+
 rebuild_eudico:
 	docker image build --no-cache  -t $(DOCKER_EUDICO_IMAGE) -f $(DOCKERFILE_EUDICO) .
 .PHONY: rebuild_eudico
@@ -93,8 +99,8 @@ delete_monitoring:
 .PHONY: delete_monitoring
 
 delete_deployment:
-	k3s kubectl delete -f ./deploy/deployment.yaml
-	k3s kubectl delete -f ./deploy/volume.yaml
+	k3d kubectl delete -f ./deploy/deployment.yaml
+	k3d kubectl delete -f ./deploy/volume.yaml
 .PHONY: delete_deployment
 
 delete_all: delete_monitoring delete_deployment
