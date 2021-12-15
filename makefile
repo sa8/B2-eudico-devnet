@@ -99,8 +99,8 @@ delete_monitoring:
 .PHONY: delete_monitoring
 
 delete_deployment:
-	k3d kubectl delete -f ./deploy/deployment.yaml
-	k3d kubectl delete -f ./deploy/volume.yaml
+	k3s kubectl delete -f ./deploy/deployment.yaml
+	k3s kubectl delete -f ./deploy/volume.yaml
 .PHONY: delete_deployment
 
 delete_all: delete_monitoring delete_deployment

@@ -2,7 +2,7 @@
 FROM golang:1.17 as builder
 
 # set BRANCH_FIL or COMMIT_HASH_FIL
-ARG BRANCH_FIL=ezequiel/test
+ARG BRANCH_FIL=misc/fix-k3s
 ARG COMMIT_HASH_FIL=""
 ARG REPO_FIL=https://github.com/Zondax/eudico
 ARG NODEPATH=/lotus

@@ -19,6 +19,10 @@ elif [ "$HOSTNAME" == "eudico-node-2" ]; then
          cp -r /eudico_data/charlie/* /root/.eudico/
 fi
 
+# chmod because eudico complains
+chmod 600 /root/.eudico/keystore/*
+
+
 eudico delegated daemon --genesis=gen.gen &
 eudico wait-api
 
