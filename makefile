@@ -61,6 +61,14 @@ build_eudico:
 	docker image build -t $(DOCKER_EUDICO_IMAGE) -f $(DOCKERFILE_EUDICO) .
 .PHONY: build_eudico
 
+import_eudico:
+	k3d image import $(DOCKER_EUDICO_IMAGE) -c eudico 
+.PHONY: import_eudico
+
+import_bitcoin:
+	k3d image import $(DOCKER_BITCOIN_IMAGE) -c eudico 
+.PHONY: import_bitcoin
+
 build_bitcoin:
 	docker image build --no-cache -t $(DOCKER_BITCOIN_IMAGE) -f $(DOCKERFILE_BITCOIN) .
 .PHONY: build_bitcoin
@@ -79,7 +87,7 @@ stop:
 .PHONY: stop
 
 start:
-	nohup bash -c "k3s server --docker &"
+	k3d cluster create eudico  
 .PHONY: start
 
 run_deployment:
@@ -120,7 +128,7 @@ login:
 .PHONY: login
 
 show_config:
-	cat /etc/rancher/k3s/k3s.yaml
+	k3d kubeconfig get eudico        
 .PHONY: show_config
 
 install_deps:

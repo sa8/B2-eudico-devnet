@@ -23,6 +23,7 @@ spec:
               value: 123secure
           ports:
             - containerPort: 9000
+            - containerPort: 9001
           command: [minio, server, /data]
           lifecycle:
             postStart:
@@ -40,3 +41,7 @@ spec:
               port: 9000
             initialDelaySeconds: 5
             periodSeconds: 10
+        - name: mc
+          image: minio/mc
+          command: ["/bin/sh"]
+          args: ["-c", "sleep 30; /usr/bin/mc alias set myminio http://minio:9000 lola 123secure; /usr/bin/mc mb myminio/eudico; /usr/bin/mc policy set public myminio/eudico; sleep infinity;"]

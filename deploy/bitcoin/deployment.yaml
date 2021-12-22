@@ -20,14 +20,18 @@ spec:
     spec:
       containers:
         - name: bitcoin-node
-          image: rllola/bitcoind
-          imagePullPolicy: Always
+          image: zondax/bitcoin-node
+          imagePullPolicy: Never
           ports:
             - containerPort: 8332
           volumeMounts:
             - name: bitcoind-config
               mountPath: /root/.bitcoin/bitcoin.conf
               subPath: bitcoin.conf
+
+        - name: bitcoin-miner
+          image: rllola/regtest-miner
+          imagePullPolicy: Always
       volumes:
         - name: bitcoind-config
           configMap:
