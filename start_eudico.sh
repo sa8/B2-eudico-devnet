@@ -40,10 +40,9 @@ if [ -s /config/peerID.txt ]; then
                 eudico net connect $peerID
         done < /config/peerID.txt
 else
-        eudico wallet import --as-default --format=json-lotus key.key
-
-        # Create peerID file
-        eudico net listen | head -n 1 > /config/peerID.txt
+  eudico wallet import --as-default --format=json-lotus key.key
+  # Create peerID file
+  eudico net listen | head -n 1 > /config/peerID.txt
 
 	# Start mining after 1min
 	sleep 60
