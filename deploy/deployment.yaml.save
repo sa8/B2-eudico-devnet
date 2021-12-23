@@ -36,6 +36,7 @@ spec:
           env:
             - name: EUDICO_PATH
               value: "/root/.eudico"
+        - 
       volumes:
         - name: eudico-config
           persistentVolumeClaim:

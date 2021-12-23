@@ -5,7 +5,7 @@
   Timeout = "30s"
 #
 [Libp2p]
-#  ListenAddresses = ["/ip4/0.0.0.0/tcp/0", "/ip6/::/tcp/0"]
+  ListenAddresses = ["/ip4/0.0.0.0/tcp/0"]
 #  AnnounceAddresses = []
 #  NoAnnounceAddresses = []
 #  ConnMgrLow = 150
@@ -29,4 +29,12 @@
 #  RemoteBackend = ""
 #  EnableLedger = false
 #  DisableLocal = false
-#
+
+[Checkpoint]
+  Fee = 0.01
+  BitcoinHost="http://btc-rpc:8332"
+  PublicKey="66a554b8af6719851a936b0afc29dc59c3678f0e3f0b7bb081c57c5b77ad48ff"
+  MinioHost = "minio:9000"
+  MinioAccessKeyID = "lola"
+  MinioSecretAccessKey = "123secure"
+  MinioBucketName = "eudico"

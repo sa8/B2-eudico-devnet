@@ -14,8 +14,10 @@
 #*  limitations under the License.
 #********************************************************************************
 
+DOCKER_BITCOIN_IMAGE=zondax/bitcoin-node:latest
 DOCKER_EUDICO_IMAGE=zondax/filecoin-eudico:latest
 DOCKERFILE_EUDICO=./eudico.dockerfile
+DOCKERFILE_BITCOIN=./bitcoin.dockerfile
 
 CONTAINER_NAME=eudiconode
 CONTAINER_DEVNET_NAME=filecoin-eudico-devnet
@@ -59,6 +61,18 @@ build_eudico:
 	docker image build -t $(DOCKER_EUDICO_IMAGE) -f $(DOCKERFILE_EUDICO) .
 .PHONY: build_eudico
 
+import_eudico:
+	k3d image import $(DOCKER_EUDICO_IMAGE) -c eudico 
+.PHONY: import_eudico
+
+import_bitcoin:
+	k3d image import $(DOCKER_BITCOIN_IMAGE) -c eudico 
+.PHONY: import_bitcoin
+
+build_bitcoin:
+	docker image build --no-cache -t $(DOCKER_BITCOIN_IMAGE) -f $(DOCKERFILE_BITCOIN) .
+.PHONY: build_bitcoin
+
 rebuild_eudico:
 	docker image build --no-cache  -t $(DOCKER_EUDICO_IMAGE) -f $(DOCKERFILE_EUDICO) .
 .PHONY: rebuild_eudico
@@ -68,33 +82,44 @@ clean:
 .PHONY: clean
 
 stop:
-	bash -c /usr/local/bin/k3s-killall.sh
-	killall k3s-server
+	k3d node stop eudico
 .PHONY: stop
 
 start:
-	nohup bash -c "k3s server --docker &"
+	k3d cluster create eudico  
 .PHONY: start
 
-run_deployment:
-	k3s kubectl apply -f ./deploy
-.PHONY: run_deployment
+delete:
+	k3d node delete eudico
+.PHONY: delete
+
+run_eudico:
+	kubectl apply -f ./deploy
+.PHONY: run_eudico
+
+run_bitcoin:
+	kubectl apply -f ./deploy/bitcoin
+.PHONY: run_bitcoin
+
+run_minio:
+	kubectl apply -f ./deploy/minio
+.PHONY: run_minio
 
 run_monitoring:
-	k3s kubectl create namespace monitoring ;\
-	k3s kubectl apply -f ./deploy/monitoring
+	kubectl create namespace monitoring ;\
+	kubectl apply -f ./deploy/monitoring
 .PHONY: run_monitoring
 
-run_all: run_monitoring run_deployment
+run_all: run_monitoring run_bitcoin run_minio run_eudico
 .PHONY: run_all
 
 delete_monitoring:
-	k3s kubectl delete -f ./deploy/monitoring
+	kubectl delete -f ./deploy/monitoring
 .PHONY: delete_monitoring
 
 delete_deployment:
-	k3s kubectl delete -f ./deploy/deployment.yaml
-	k3s kubectl delete -f ./deploy/volume.yaml
+	kubectl delete -f ./deploy/deployment.yaml
+	kubectl delete -f ./deploy/volume.yaml
 .PHONY: delete_deployment
 
 delete_all: delete_monitoring delete_deployment
@@ -110,19 +135,15 @@ expose_grafana:
 .PHONY: expose_grafana
 
 login:
-	k3s kubectl exec --stdin --tty $(NODE_NAME)$(NODEID) -- /bin/bash
+	kubectl exec --stdin --tty $(NODE_NAME)$(NODEID) -- /bin/bash
 .PHONY: login
 
 show_config:
-	cat /etc/rancher/k3s/k3s.yaml
+	k3d kubeconfig get eudico        
 .PHONY: show_config
 
 install_deps:
-	curl -sfL https://get.k3s.io | INSTALL_K3S_SKIP_START=true INSTALL_K3S_SKIP_ENABLE=true sh -s
-	k3s --version
+	wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+	k3d --version
 .PHONY: install_deps
-
-uninstall_deps:
-	bash -c /usr/local/bin/k3s-uninstall.sh
-.PHONY: uninstall_deps
 	
