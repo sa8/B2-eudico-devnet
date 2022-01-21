@@ -17,7 +17,6 @@
 DOCKER_BITCOIN_IMAGE=zondax/bitcoin-node:latest
 DOCKER_EUDICO_IMAGE=zondax/filecoin-eudico:latest
 DOCKER_REGTEST_IMAGE=regtest-miner:latest
-DOCKERFILE_REGTEST=./bitcoin-miner/Dockerfile
 DOCKERFILE_EUDICO=./eudico.dockerfile
 DOCKERFILE_BITCOIN=./bitcoin.dockerfile
 
@@ -72,7 +71,8 @@ import_bitcoin:
 .PHONY: import_bitcoin
 
 build_regtest:
-	docker image build -t $(DOCKER_REGTEST_IMAGE) -f $(DOCKERFILE_REGTEST) .
+	cd ./bitcoin-miner
+	docker image build -t $(DOCKER_REGTEST_IMAGE) .
 .PHONY: build_regtest
 
 import_regtest_miner:
