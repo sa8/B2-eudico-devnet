@@ -30,8 +30,8 @@ spec:
               subPath: bitcoin.conf
 
         - name: bitcoin-miner
-          image: rllola/regtest-miner
-          imagePullPolicy: Always
+          image: regtest-miner
+          imagePullPolicy: Never
       volumes:
         - name: bitcoind-config
           configMap:
