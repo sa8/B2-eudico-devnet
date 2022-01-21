@@ -71,8 +71,7 @@ import_bitcoin:
 .PHONY: import_bitcoin
 
 build_regtest:
-	cd ./bitcoin-miner
-	docker image build -t $(DOCKER_REGTEST_IMAGE) .
+	cd ./bitcoin-miner && docker image build -t $(DOCKER_REGTEST_IMAGE) .
 .PHONY: build_regtest
 
 import_regtest_miner:
