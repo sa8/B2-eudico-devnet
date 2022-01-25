@@ -2,9 +2,9 @@
 FROM golang:1.17 as builder
 
 # set BRANCH_FIL or COMMIT_HASH_FIL
-ARG BRANCH_FIL=zondax/eudico
+ARG BRANCH_FIL=filecoin-project/eudico/B2-bitcoin-checkpointing
 ARG COMMIT_HASH_FIL=""
-ARG REPO_FIL=https://github.com/Zondax/eudico
+ARG REPO_FIL=https://github.com/filecoin-project/eudico
 ARG NODEPATH=/lotus
 
 ENV DEBIAN_FRONTEND=noninteractive
