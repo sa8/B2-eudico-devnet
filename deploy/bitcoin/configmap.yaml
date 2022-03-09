@@ -19,5 +19,5 @@ data:
     rpcpassword=pikachutestnetB2
     
     [test]
-    rpcport=18332
+    rpcport=8332
  
