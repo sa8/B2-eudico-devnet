@@ -18,7 +18,7 @@ spec:
           image: minio/minio
           env:
             - name: MINIO_ROOT_USER
-              value: lola
+              value: sarah
             - name: MINIO_ROOT_PASSWORD
               value: 123secure
           ports:
