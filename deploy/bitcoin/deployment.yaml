@@ -28,7 +28,7 @@ spec:
             - name: bitcoind-config
               mountPath: /root/.bitcoin/bitcoin.conf
               subPath: bitcoin.conf
-
+      volumes:
         - name: bitcoind-config
           configMap:
             name: bitcoind-cnf
