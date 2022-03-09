@@ -8,4 +8,4 @@ spec:
   ports:
     - name: btc-rpc-port
       protocol: TCP
-      port: 8332
+      port: 18332

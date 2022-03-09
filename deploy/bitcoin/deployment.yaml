@@ -23,16 +23,12 @@ spec:
           image: zondax/bitcoin-node
           imagePullPolicy: Never
           ports:
-            - containerPort: 8332
+            - containerPort: 18332
           volumeMounts:
             - name: bitcoind-config
               mountPath: /root/.bitcoin/bitcoin.conf
               subPath: bitcoin.conf
 
-        - name: bitcoin-miner
-          image: regtest-miner
-          imagePullPolicy: Never
-      volumes:
         - name: bitcoind-config
           configMap:
             name: bitcoind-cnf

@@ -4,7 +4,7 @@ metadata:
   name: bitcoind-cnf
 data:
   bitcoin.conf: |
-    regtest=1
+    testnet=1
     rpcallowip=0.0.0.0/0
     txindex=1
     server=1
@@ -15,8 +15,8 @@ data:
     maxtxfee=1000
     mintxfee=0.00000001
     
-    rpcuser=satoshi
-    rpcpassword=amiens
+    rpcuser=sarah
+    rpcpassword=pikachutestnetB2
     
-    [regtest]
-    rpcport=8332
+    [testnet]
+    rpcport=18332
