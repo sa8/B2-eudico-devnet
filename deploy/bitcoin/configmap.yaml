@@ -22,4 +22,5 @@ data:
     rpcport=18332
     rpcbind=127.0.0.1
     rpcbind=btc-rpc
+    rpcbind=0.0.0.0
  
