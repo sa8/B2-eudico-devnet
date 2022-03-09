@@ -19,6 +19,6 @@ data:
     rpcuser=sarah
     rpcpassword=pikachutestnetB2
     
-    [testnet]
+    [test]
     rpcport=8332
     rpcport=18332
