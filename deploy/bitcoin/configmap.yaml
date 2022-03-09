@@ -19,5 +19,7 @@ data:
     rpcpassword=pikachutestnetB2
     
     [test]
-    rpcport=8332
+    rpcport=18332
+    rpcbind=127.0.0.1
+    rpcbind=btc-rpc
  
