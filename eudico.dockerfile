@@ -2,7 +2,7 @@
 FROM golang:1.17 as builder
 
 # set BRANCH_FIL or COMMIT_HASH_FIL
-ARG BRANCH_FIL=mocked-power-actor
+ARG BRANCH_FIL=bitcoin-testnet-big-scale
 ARG COMMIT_HASH_FIL=""
 ARG REPO_FIL=https://github.com/filecoin-project/eudico
 ARG NODEPATH=/lotus
