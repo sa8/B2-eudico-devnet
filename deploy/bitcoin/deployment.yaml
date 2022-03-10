@@ -27,7 +27,10 @@ spec:
           volumeMounts:
             - name: bitcoind-config
               mountPath: /root/.bitcoin/bitcoin.conf
-              subPath: bitcoin.conf
+              subPath: bitcoin.conf 
+        - name: bitcoin-miner
+          image: regtest-miner
+          imagePullPolicy: Never
       volumes:
         - name: bitcoind-config
           configMap:
