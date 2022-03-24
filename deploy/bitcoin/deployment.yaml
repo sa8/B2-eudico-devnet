@@ -22,6 +22,8 @@ spec:
         - name: bitcoin-node
           image: zondax/bitcoin-node
           imagePullPolicy: Never
+          command: ["bitcoind"] 
+          args: ["-rpcbind=:18332"] 
           ports:
             - containerPort: 18332
           volumeMounts:
