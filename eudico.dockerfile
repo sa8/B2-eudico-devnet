@@ -2,7 +2,7 @@
 FROM golang:1.17 as builder
 
 # set BRANCH_FIL or COMMIT_HASH_FIL
-ARG BRANCH_FIL=B2-bitcoin-checkpointing
+ARG BRANCH_FIL=B2-with-failure
 ARG COMMIT_HASH_FIL=""
 ARG REPO_FIL=https://github.com/filecoin-project/eudico
 ARG NODEPATH=/lotus
@@ -65,10 +65,10 @@ COPY --from=builder /lotus/eudico /usr/local/bin/
 COPY --from=builder /lotus/data/ /eudico_data
 
 # Create genesis file
-#RUN eudico delegated genesis t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba gen.gen
+RUN eudico delegated genesis t1d2xrzcslx7xlbbylc5c3d5lvandqw4iwl6epxba gen.gen
 
 # Copy genesis file
-COPY gen.gen /gen.gen
+# COPY gen.gen /gen.gen
 
 # Copy key file
 COPY key.key /key.key
