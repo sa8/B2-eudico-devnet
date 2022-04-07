@@ -30,6 +30,7 @@ MUL=$(echo $HOSTNAME | sed 's/[^0-9]//g')
 eudico delegated daemon --genesis=gen.gen &
 eudico wait-api
 
+
 if [ -s /config/peerID.txt ]; then
         # Connect to all the nodes
 
@@ -40,16 +41,14 @@ if [ -s /config/peerID.txt ]; then
                 eudico net connect $peerID
         done < /config/peerID.txt
 else
-<<<<<<< HEAD
-  if [ "$HOSTNAME" == "eudico-node-0" ]; then
-    eudico wallet import --as-default --format=json-lotus key.key
     # Create peerID file
-    eudico net listen | head -n 1 > /config/peerID.txt
-  
-    sleep 60
-
-    	# Start mining after 1min
-    	eudico delegated miner &
+    if [ "$HOSTNAME" == "eudico-node-0" ]; then
+        eudico net listen | head -n 1 > /config/peerID.txt
+      
+        eudico wallet import --as-default --format=json-lotus key.key
+        sleep 30
+        	# Start mining after 1min
+        eudico delegated miner &
     fi
 fi
 
