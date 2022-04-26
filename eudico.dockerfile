@@ -2,7 +2,7 @@
 FROM golang:1.17 as builder
 
 # set BRANCH_FIL or COMMIT_HASH_FIL
-ARG BRANCH_FIL=test/remove-bitcoin 
+ARG BRANCH_FIL=B2-with-failure 
 ARG COMMIT_HASH_FIL=""
 ARG REPO_FIL=https://github.com/filecoin-project/eudico
 ARG NODEPATH=/lotus
